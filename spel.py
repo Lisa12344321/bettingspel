@@ -1,4 +1,4 @@
-import tkinter as tk
+from tkinter import *
 import random
 
 def spin_row():
@@ -14,17 +14,22 @@ def spin_row():
     spin["state"] = "disabled"
 
     global money
+    global vinst
     #RESULTAT
     if results[0] == results[1] == results[2]:
-        print("jaaa")
         
-        money = money + int(bet_entry.get())*2
-        money_label["text"] = f"Pengar: {money} kr"
-        win_label["text"] = f"Du vann! Din bet x2: {int(bet_entry.get())*2} kr"
+        
+        money = money + int(bet_entry.get())*vinst
+        money_label["text"] = f"{money} $"
+        win_label["text"] = f"Vinst! {str(bet_entry.get())} x {str(vinst)} \n + {int(bet_entry.get())*vinst} $"
+        bet_entry.delete(0,END)
 
     else:
-        print("nej")
-        win_label["text"] = "Du vann inte"
+        entry_text = int(bet_entry.get())
+        money = money-entry_text
+        money_label["text"] = f"{money} $"
+        win_label["text"] = f"Du vann inte \n - {bet_entry.get()} $"
+        bet_entry.delete(0,END)
     
     
 
@@ -38,7 +43,6 @@ def bet():
         bet_entry["state"] = "disabled"
         bet_button["state"] = "disabled"
         try_again_label["text"] = "Du har inga pengar kvar"
-        print(":(")
 
     while money > 0:
     
@@ -48,61 +52,57 @@ def bet():
         if entry_text <= money and entry_text > 0:
             try_again_label["text"] = ""
             the_row["text"] = ""
-            bet_label["text"] = f"Din bet: {entry_text} kr"
+            bet_label["text"] = f"Din bet: {entry_text} $"
             bet_entry["state"] = "disabled"
             bet_button["state"] = "disabled"
             
-            money = money-entry_text
-            money_label["text"] = f"Pengar: {money} kr"
+            
             spin["state"] = "normal"
             break
         else:
             try_again_label["text"] = "Försök igen"
             break
-    
 
 
-
-
-def pay():
-    pass
-
-
-root = tk.Tk()
+root = Tk()
 root.title("Spel")
 
-money = 100
+frame = Frame(root)
+frame.pack()
+
+money = 1000
+vinst = 4
 
 
 
-money_label = tk.Label(root, text=f"Pengar: {money} kr")
+money_label = Label(frame, text=f"{money} $")
 money_label.grid(row=0, column=0)
 
-bet_entry = tk.Entry(root)
+bet_entry = Entry(frame)
 bet_entry.grid(row=0, column=1)
 
-try_again_label = tk.Label(root, text="")
+try_again_label = Label(frame, text="")
 try_again_label.grid(row=1, column=1)
 
 
 
-bet_label = tk.Label(root, text=" ")
+bet_label = Label(frame, text=" ")
 bet_label.grid(row=1, column=0)
 
-bet_button = tk.Button(root, text="Betta", command=bet)
-bet_button.grid(row=0, column=1, sticky=tk.E)
+bet_button = Button(frame, text="Betta", command=bet)
+bet_button.grid(row=0, column=1, sticky=E)
 
 
 
-the_row = tk.Label(root, text ="", font=20)
+the_row = Label(frame, text ="", font=20)
 the_row.grid(row=2, column=0)
 
 
-spin = tk.Button(root, text="SPIN", font=20, command=spin_row)
+spin = Button(frame, text="SPIN", font=20, command=spin_row)
 spin["state"] = "disabled"
 spin.grid(row=3, column=0)
 
-win_label = tk.Label(root, text="")
+win_label = Label(frame, text="")
 win_label.grid(row=2, column=1)
 
 
