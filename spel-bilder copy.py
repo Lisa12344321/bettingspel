@@ -1,5 +1,6 @@
 from tkinter import *
 import random
+from tkinter import messagebox
 
 def spin_row():
 
@@ -62,6 +63,18 @@ def bet(event):
         bet_button["state"] = "disabled"
         try_again_label["text"] = "Du har inga pengar kvar"
 
+        if messagebox.askyesno(message="Spela igen?"):
+            money = 1000
+            money_label["text"] = f"{money} $"
+            bet_entry.delete(0,END)
+            bet_entry["state"] = "normal"
+            bet_button["state"] = "normal"
+            try_again_label["text"] = ""
+            bet_label["text"] = ""
+            
+        else:
+            root.destroy()
+
     while money > 0:
     
         
@@ -101,45 +114,51 @@ katt_1 = PhotoImage(file="katt1-edit.png")
 katt_2 = PhotoImage(file="åke-edit.png")
 katt_3 = PhotoImage(file="herman-edit.png")
 
+logga = PhotoImage(file="catsino-logga.png")
+logga_label = Label(frame, image=logga, bg="#000000")
+logga_label.grid(row=0, column=0, columnspan=2, pady= 20)
 
 
 money_label = Label(frame, text=f"{money} $", font=20, fg="#00FF00", bg="#000000")
-money_label.grid(row=0, column=0)
+money_label.grid(row=1, column=0)
 
 bet_entry = Entry(frame, font=20, fg="#00FF00", bg="#262626")
-bet_entry.grid(row=0, column=1, padx=20, pady=30)
+bet_entry.grid(row=1, column=1, padx=20, pady=30)
 
 try_again_label = Label(frame, text="", font=20, fg="#00FF00", bg="#000000")
-try_again_label.grid(row=1, column=1)
+try_again_label.grid(row=2, column=1)
 
 
 
 bet_label = Label(frame, text="", font=20, fg="#00FF00", bg="#000000")
-bet_label.grid(row=1, column=0)
+bet_label.grid(row=2, column=0)
 
 bet_button = Button(frame, text="Betta", command=bet, font=20, fg="#00FF00", bg="#000000")
 root.bind("<Return>", bet)
 bet_button.bind("<Button-1>", bet)
 
-bet_button.grid(row=0, column=1, sticky=E)
+bet_button.grid(row=1, column=1, sticky=E)
 
-
+#---------------------------------------------
 
 the_row = Label(frame, font=20, bg="#000000")
-the_row.grid(row=3, column=0, columnspan=2, pady=10, sticky=W)
-the_row2 = Label(frame, font=20, bg="#000000")
-the_row2.grid(row=3, column=0, columnspan=2, pady=10)
-the_row3 = Label(frame, font=20, bg="#000000")
-the_row3.grid(row=3, column=0, columnspan=2, pady=10, sticky=E)
+the_row.grid(row=4, column=0, columnspan=2, pady=10, sticky=W)
 
+the_row2 = Label(frame, font=20, bg="#000000")
+the_row2.grid(row=4, column=0, columnspan=2, pady=10)
+
+the_row3 = Label(frame, font=20, bg="#000000")
+the_row3.grid(row=4, column=0, columnspan=2, pady=10, sticky=E)
+
+#------------------------------------------------
 
 spin = Button(frame, text="SPIN", font=20, command=spin_row, bg= "#00FF00")
 spin["state"] = "disabled"
-spin.grid(row=4, column=0, columnspan=2)
+spin.grid(row=5, column=0, columnspan=2, pady=20)
 
 
 win_label = Label(frame, text="", font=20, fg="#00FF00", bg="#000000")
-win_label.grid(row=2, column=0, columnspan=2)
+win_label.grid(row=3, column=0, columnspan=2)
 
 
 
